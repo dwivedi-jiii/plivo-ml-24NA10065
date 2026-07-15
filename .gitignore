@@ -1,0 +1,12 @@
+data/
+*.zip
+*.wav
+*.mp3
+*.flac
+__pycache__/
+*.pyc
+*.pth
+env/
+*.pkl
+*.joblib
+*.csv

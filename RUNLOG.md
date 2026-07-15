@@ -1,0 +1,7 @@
+# RUNLOG
+
+## Run 1 | Score: 1600 ms delay, 0.0% cutoff, AUC: 0.514 | Changed: N/A | Why: Silence-only baseline on English.
+
+## Run 2 | Score: 850 ms delay, 5.0% cutoff, AUC: 0.501 | Changed: N/A | Why: Silence-only baseline on Hindi.
+
+## Run 3 | Score: 1190 ms delay, 5.0% cutoff, AUC: 0.599 | Changed: Starter features & Logistic Regression | Why: Simple features (last 5 frames energy mean, voiced pitch, and context duration) to verify pipeline.
