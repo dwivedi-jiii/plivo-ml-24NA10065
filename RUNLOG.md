@@ -9,3 +9,5 @@
 ## Run 4 | Score: 1116 ms delay, 5.0% cutoff, AUC: 0.722 | Changed: Implemented causal audio features v1 (ZCR, spectral centroid, energy contours, voiced ratio, F0 features) & Logistic Regression with calibration | Why: Extracted temporal context and rich prosodic information to distinguish holds from true EOTs.
 
 ## Run 5 | Score: 115 ms delay, 1.0% cutoff, AUC: 1.000 | Changed: Trained and compared 4 classifiers (LR, MLP, Random Forest, HGB) on English with 19 causal features, selected best architecture (Random Forest) | Why: Random Forest captures complex non-linear relations and interaction terms between pause indices and durations.
+
+## Run 6 | Score: 160 ms delay, 3.0% cutoff, AUC: 0.997 | Changed: Trained and compared 4 classifiers (LR, MLP, Random Forest, HGB) on Hindi with 19 causal features, selected best architecture (HistGradientBoosting) | Why: Gradient boosting handles non-linear boundaries with robust regularization on the Hindi feature set.
