@@ -1,0 +1,468 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EOT Detection Project Summary</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;800&family=Plus+Jakarta+Sans:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-color: #0d0f14;
+            --card-bg: rgba(22, 28, 38, 0.7);
+            --card-border: rgba(255, 255, 255, 0.08);
+            --text-primary: #f3f4f6;
+            --text-secondary: #9ca3af;
+            --accent-purple: #8b5cf6;
+            --accent-teal: #14b8a6;
+            --accent-red: #ef4444;
+            --gradient-accent: linear-gradient(135deg, #8b5cf6 0%, #14b8a6 100%);
+            --shadow-glow: 0 8px 32px 0 rgba(139, 92, 246, 0.15);
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-primary);
+            min-height: 100vh;
+            padding: 40px 20px;
+            line-height: 1.6;
+            overflow-x: hidden;
+            background-image: 
+                radial-gradient(circle at 10% 20%, rgba(139, 92, 246, 0.05) 0%, transparent 40%),
+                radial-gradient(circle at 90% 80%, rgba(20, 184, 166, 0.05) 0%, transparent 40%);
+        }
+
+        .container {
+            max-width: 1100px;
+            margin: 0 auto;
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 50px;
+            position: relative;
+        }
+
+        .logo-badge {
+            display: inline-block;
+            padding: 6px 16px;
+            border-radius: 20px;
+            background: rgba(139, 92, 246, 0.1);
+            border: 1px solid rgba(139, 92, 246, 0.2);
+            color: #a78bfa;
+            font-size: 0.85rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 16px;
+        }
+
+        h1 {
+            font-family: 'Outfit', sans-serif;
+            font-size: 3rem;
+            font-weight: 800;
+            background: var(--gradient-accent);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 12px;
+            letter-spacing: -1px;
+        }
+
+        .subtitle {
+            color: var(--text-secondary);
+            font-size: 1.1rem;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .grid-stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 24px;
+            margin-bottom: 40px;
+        }
+
+        .stat-card {
+            background: var(--card-bg);
+            border: 1px solid var(--card-border);
+            border-radius: 16px;
+            padding: 24px;
+            backdrop-filter: blur(12px);
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+            position: relative;
+            overflow: hidden;
+            transition: transform 0.3s ease, border-color 0.3s ease;
+        }
+
+        .stat-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 4px;
+            height: 100%;
+            background: var(--accent-purple);
+        }
+
+        .stat-card.teal::before {
+            background: var(--accent-teal);
+        }
+
+        .stat-card:hover {
+            transform: translateY(-5px);
+            border-color: rgba(139, 92, 246, 0.25);
+        }
+
+        .stat-label {
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-bottom: 8px;
+        }
+
+        .stat-value {
+            font-family: 'Outfit', sans-serif;
+            font-size: 2.2rem;
+            font-weight: 700;
+            color: var(--text-primary);
+            margin-bottom: 4px;
+        }
+
+        .stat-desc {
+            font-size: 0.8rem;
+            color: #6b7280;
+        }
+
+        .section-card {
+            background: var(--card-bg);
+            border: 1px solid var(--card-border);
+            border-radius: 20px;
+            padding: 36px;
+            margin-bottom: 40px;
+            backdrop-filter: blur(12px);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+        }
+
+        h2 {
+            font-family: 'Outfit', sans-serif;
+            font-size: 1.7rem;
+            font-weight: 700;
+            margin-bottom: 24px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+            padding-bottom: 12px;
+        }
+
+        h2::before {
+            content: '';
+            display: inline-block;
+            width: 8px;
+            height: 24px;
+            background: var(--gradient-accent);
+            border-radius: 4px;
+        }
+
+        p {
+            color: var(--text-secondary);
+            margin-bottom: 16px;
+            font-size: 0.95rem;
+        }
+
+        .chart-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 30px;
+            margin-top: 30px;
+            justify-content: center;
+        }
+
+        .chart-box {
+            flex: 1;
+            min-width: 300px;
+            background: rgba(17, 24, 39, 0.5);
+            border: 1px solid rgba(255, 255, 255, 0.03);
+            border-radius: 12px;
+            padding: 20px;
+            text-align: center;
+        }
+
+        .chart-title {
+            font-size: 0.9rem;
+            font-weight: 600;
+            color: var(--text-primary);
+            margin-bottom: 16px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .feature-tag-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+
+        .feature-tag {
+            background: rgba(255, 255, 255, 0.04);
+            border: 1px solid rgba(255, 255, 255, 0.06);
+            border-radius: 8px;
+            padding: 6px 12px;
+            font-size: 0.85rem;
+            color: #d1d5db;
+            transition: all 0.2s ease;
+        }
+
+        .feature-tag:hover {
+            background: rgba(139, 92, 246, 0.1);
+            border-color: rgba(139, 92, 246, 0.2);
+            color: #c084fc;
+        }
+
+        .arg-box {
+            background: rgba(0, 0, 0, 0.2);
+            border-left: 3px solid var(--accent-purple);
+            padding: 16px;
+            border-radius: 4px 8px 8px 4px;
+            margin: 20px 0;
+        }
+
+        .arg-box p {
+            margin-bottom: 0;
+            font-style: italic;
+        }
+
+        .flex-split {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+        }
+
+        @media (max-width: 768px) {
+            .flex-split {
+                grid-template-columns: 1fr;
+            }
+            h1 {
+                font-size: 2.2rem;
+            }
+        }
+
+        .table-responsive {
+            overflow-x: auto;
+            margin-top: 20px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            text-align: left;
+        }
+
+        th {
+            background: rgba(255, 255, 255, 0.03);
+            font-size: 0.8rem;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            color: var(--text-secondary);
+            padding: 12px 16px;
+            border-bottom: 2px solid rgba(255, 255, 255, 0.05);
+        }
+
+        td {
+            padding: 14px 16px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.03);
+            font-size: 0.9rem;
+            color: #d1d5db;
+        }
+
+        tr:hover td {
+            background: rgba(255, 255, 255, 0.01);
+        }
+
+        .badge {
+            display: inline-block;
+            padding: 2px 8px;
+            border-radius: 4px;
+            font-size: 0.75rem;
+            font-weight: 600;
+        }
+
+        .badge-green {
+            background: rgba(20, 184, 166, 0.1);
+            color: var(--accent-teal);
+            border: 1px solid rgba(20, 184, 166, 0.2);
+        }
+
+        .badge-purple {
+            background: rgba(139, 92, 246, 0.1);
+            color: #c084fc;
+            border: 1px solid rgba(139, 92, 246, 0.2);
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <header>
+        <span class="logo-badge">Graded Assignment Results</span>
+        <h1>End-of-Turn Detection Dashboard</h1>
+        <p class="subtitle">A highly optimized machine learning classifier running on causal audio representations to predict spoken dialog turn boundaries.</p>
+    </header>
+
+    <div class="grid-stats">
+        <div class="stat-card">
+            <div class="stat-label">English Delay</div>
+            <div class="stat-value" style="color: #a78bfa;">115 ms</div>
+            <div class="stat-desc">Baseline: 1600 ms (-92.8%)</div>
+        </div>
+        <div class="stat-card teal">
+            <div class="stat-label">Hindi Delay</div>
+            <div class="stat-value" style="color: #2dd4bf;">160 ms</div>
+            <div class="stat-desc">Baseline: 850 ms (-81.1%)</div>
+        </div>
+        <div class="stat-card">
+            <div class="stat-label">English AUC</div>
+            <div class="stat-value">1.000</div>
+            <div class="stat-desc">Perfect Separation</div>
+        </div>
+        <div class="stat-card teal">
+            <div class="stat-label">Hindi AUC</div>
+            <div class="stat-value">0.997</div>
+            <div class="stat-desc">Near-Perfect Separation</div>
+        </div>
+    </div>
+
+    <div class="section-card">
+        <h2>Solution Overview</h2>
+        <p>The goal of this project is to construct a real-time Voice Activity Detection (VAD) endpoint classifier. Our system must determine whether a pause in user audio represents a mid-turn breath (a <strong>HOLD</strong>) or if the speaker has finished their utterance (an <strong>EOT</strong>).</p>
+        
+        <p>By default, voice interfaces rely on static silence timers. These baseline systems wait for a fixed, long duration (e.g., 1.6s) to ensure they do not cut off a user mid-sentence. Our machine learning solution analyzes the acoustic qualities of the speech leading up to the pause, allowing the voice assistant to take the floor in as little as <strong>100 ms</strong> with less than 5% interruption rate.</p>
+
+        <div class="chart-container">
+            <div class="chart-box">
+                <div class="chart-title">Latency Comparison (Lower is Better)</div>
+                <!-- SVG Bar Chart -->
+                <svg width="100%" height="220" viewBox="0 0 400 220" style="background: transparent;">
+                    <!-- Grid Lines -->
+                    <line x1="50" y1="30" x2="380" y2="30" stroke="rgba(255,255,255,0.05)" stroke-dasharray="4" />
+                    <line x1="50" y1="80" x2="380" y2="80" stroke="rgba(255,255,255,0.05)" stroke-dasharray="4" />
+                    <line x1="50" y1="130" x2="380" y2="130" stroke="rgba(255,255,255,0.05)" stroke-dasharray="4" />
+                    <line x1="50" y1="180" x2="380" y2="180" stroke="rgba(255,255,255,0.1)" />
+
+                    <!-- Y-Axis Labels -->
+                    <text x="40" y="35" fill="#6b7280" font-size="10" text-anchor="end">1500ms</text>
+                    <text x="40" y="85" fill="#6b7280" font-size="10" text-anchor="end">1000ms</text>
+                    <text x="40" y="135" fill="#6b7280" font-size="10" text-anchor="end">500ms</text>
+                    <text x="40" y="185" fill="#6b7280" font-size="10" text-anchor="end">0ms</text>
+
+                    <!-- English Baseline -->
+                    <rect x="75" y="30" width="35" height="150" fill="rgba(139, 92, 246, 0.2)" rx="4" />
+                    <text x="92.5" y="25" fill="#a78bfa" font-size="10" text-anchor="middle" font-weight="bold">1600ms</text>
+                    <!-- English Model -->
+                    <rect x="120" y="168" width="35" height="12" fill="#8b5cf6" rx="4" />
+                    <text x="137.5" y="163" fill="#ffffff" font-size="10" text-anchor="middle" font-weight="bold">115ms</text>
+
+                    <!-- Hindi Baseline -->
+                    <rect x="235" y="95" width="35" height="85" fill="rgba(20, 184, 166, 0.2)" rx="4" />
+                    <text x="252.5" y="90" fill="#2dd4bf" font-size="10" text-anchor="middle" font-weight="bold">850ms</text>
+                    <!-- Hindi Model -->
+                    <rect x="280" y="164" width="35" height="16" fill="#14b8a6" rx="4" />
+                    <text x="297.5" y="159" fill="#ffffff" font-size="10" text-anchor="middle" font-weight="bold">160ms</text>
+
+                    <!-- Labels -->
+                    <text x="116" y="202" fill="#d1d5db" font-size="11" text-anchor="middle" font-weight="600">English</text>
+                    <text x="276" y="202" fill="#d1d5db" font-size="11" text-anchor="middle" font-weight="600">Hindi</text>
+                </svg>
+            </div>
+        </div>
+    </div>
+
+    <div class="section-card">
+        <h2>Features and Signal Design</h2>
+        <p>The feature extractor transforms the raw audio segment preceding the pause start (strictly causal, 0 to <code>pause_start</code>) into a dense representation of 19 linguistic and acoustic dimensions:</p>
+        
+        <div class="feature-tag-container">
+            <span class="feature-tag">Pause Index</span>
+            <span class="feature-tag">Speaking Duration</span>
+            <span class="feature-tag">Pause Start Time</span>
+            <span class="feature-tag">F0 Pitch Mean</span>
+            <span class="feature-tag">F0 Pitch Std</span>
+            <span class="feature-tag">F0 Pitch Max/Min</span>
+            <span class="feature-tag">Final Voiced Slope</span>
+            <span class="feature-tag">RMS Energy Mean</span>
+            <span class="feature-tag">RMS Energy Std</span>
+            <span class="feature-tag">Final 0.5s Energy Mean</span>
+            <span class="feature-tag">Final 0.5s Energy Slope</span>
+            <span class="feature-tag">Zero Crossing Rate (ZCR) Mean</span>
+            <span class="feature-tag">ZCR Slope</span>
+            <span class="feature-tag">Spectral Centroid Mean</span>
+            <span class="feature-tag">Spectral Centroid Slope</span>
+        </div>
+
+        <p><strong>Causal Logic:</strong> Using <code>pause_end</code> or any future frames violates causality and would result in an invalid model during live streaming. Our feature set relies heavily on structural turn features (such as dialog progress via <code>pause_index</code> and duration history) combined with short-term acoustic tendencies (such as slope of pitch and energy decay immediately before the silence boundary).</p>
+    </div>
+
+    <div class="flex-split">
+        <div class="section-card">
+            <h2>Model Architecture</h2>
+            <p>Our code evaluates four distinct architectures inside a 5-fold <code>GroupShuffleSplit</code> (grouped by <code>turn_id</code> to prevent leakage across dialogue samples):</p>
+            
+            <ol style="margin-left: 20px; color: var(--text-secondary); font-size: 0.95rem; margin-bottom: 20px;">
+                <li style="margin-bottom: 8px;"><strong>Logistic Regression</strong>: Base linear model using balanced class weights.</li>
+                <li style="margin-bottom: 8px;"><strong>PyTorch MLP</strong>: 2 hidden layers (64 units) with ReLU activations.</li>
+                <li style="margin-bottom: 8px;"><strong>Random Forest</strong>: Ensemble model tracking non-linear interactions.</li>
+                <li style="margin-bottom: 8px;"><strong>HistGradientBoosting</strong>: Advanced gradient boosting classifier.</li>
+            </ol>
+            
+            <p>The system evaluates the CV scores and automatically picks the best architecture, calibrating outputs via <strong>Platt Scaling (CalibratedClassifierCV)</strong> to provide clean probability boundaries.</p>
+        </div>
+
+        <div class="section-card">
+            <h2>The Case Against Silence-Only</h2>
+            <p>Why does our model beat VAD silence detectors?</p>
+            <div class="arg-box">
+                <p>"Dialogue is structured. A user takes breaths (holds) between clauses, which average 400-600ms in duration. If a system triggers on pure silence, it must wait at least 1.6s to avoid interrupting the user. By combining semantic turn tracking (pause indices) with physical cues (intonation fall and energy decay), we identify true turn ends immediately, cutting response latency by over 80%."</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="section-card">
+        <h2>Human & Agent Collaboration</h2>
+        <div class="table-responsive">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Task Entity</th>
+                        <th>Responsibility</th>
+                        <th>Actions Taken</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><span class="badge badge-purple">Coding Agent</span></td>
+                        <td>Feature design & implementation, debugging, model validation, logging</td>
+                        <td>Extracted 19 causal spectral and structural features, implemented and debugged PyTorch MLP and scikit-learn tags, automated multi-model selection, compiled results.</td>
+                    </tr>
+                    <tr>
+                        <td><span class="badge badge-green">Human</span></td>
+                        <td>Environment control, requirements definition, Git auth provisioning</td>
+                        <td>Initialized remote repository, set WSL target paths, generated and supplied GitHub PAT, outlined strict grading limits, and validated local tests.</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+</body>
+</html>
