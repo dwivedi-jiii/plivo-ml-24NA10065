@@ -115,3 +115,4 @@ def get_slope(y):
     if den == 0:
         return 0.0
     return float(num / den)
+# pitch slope and energy decay added
